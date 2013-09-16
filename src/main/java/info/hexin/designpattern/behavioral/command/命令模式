@@ -1,0 +1,237 @@
+命令模式：将请求封装成对象，从而可使用不同的请求对客户进行参数化，对请求进行排队，撤销等操作
+特点：
+
+Invoker：负责接收和执行命令，也可对命令排队，执行命令撤销等等；
+
+Command：命令接口，声明了相关的操作；
+
+ConcreteCommand：具体的命令， 持有一个Receiver，并通过调用Receiver的方法执行具体的操作；
+
+Receiver：请求的最终执行者。
+
+好处：
+　　◆很容易构造一个命令队列
+　　◆记录相关的命令日志
+　　◆增加命令的状态，实现命令的撤销和重做
+　　◆允许接受请求的一方决定是否可做
+　　◆新的命令轻而易举可以加入其中
+　　缺点：可能会有过多的具体命令类存在
+
+Command模式可以说解决了上面工厂模式的缺点，Command模式将所有的服务都展示给客户端，
+客户端可以通过特定命令形式直接指定调用后台众多Service中任何一种，Petstore中Web对EJB调用就是使用了Command模式实现。
+
+前言
+第一章：通常的命令模式
+第二章：简化的命令模式
+第三章：其他要说的内容
+前言
+以下是我对命令模式的理解。可能和很多其他文章讲述的不太一样。经过我理解加工的。供大家参考！学艺不精，并且写的比较仓促，还请大家指教。
+通常的命令模式：
+1．1通常命令模式有一下几个角色
+调用者：（命令的执行者）
+生成有序的命令队列
+按顺序执行命令操作
+提供撤销命令操作
+记录已经操作的命令
+抽象命令：
+抽象的命令接口
+具体命令：
+具体的命令。
+由三个要素组成：执行者，执行者要作的操作和被执行的对象组成。当然还可以有其他，比如将对象执行成什么结果。例如：调用Mypait类(执行者)将My rectangle(对象)填充（操作）为红色（结果）。这样就可以完全描述一个命令了。
+执行者：
+真正执行逻辑操作的对象
+
+1．2原型：
+
+//调用者
+public class Invoker{
+List commands; //命令集合
+
+public void setCommands(List commands){
+this.commands = commands;
+}
+
+public void addCommand (Command command,int i){
+commands.add(i,command);
+}
+public void removeCommand (int i){
+commands.add(i,command);
+}
+//得代执行命令
+public void action(){
+for(Iterator it = list.iterator();it.hasNext();){
+Command command = Command) it.next();
+Command. execute();
+}
+}
+……………
+//还可以有丰富的redo和undo操作；(当然一些都给基于命令类提供的相应方法)
+}
+
+//抽象命令
+abstract class Command 
+{ 
+abstract public void execute(); 
+abstract public void unexecute();
+abstract public void reexecute();
+//一般有这样这个方法，根据需要可以增删
+}
+
+// 具体的命令类1:写作命令，选择一个作者（Author类实例对象），让他写作（调用它的write方法）写作的对象是书（Book的实例对象）形成了一个写作的命令，写作的对象是Book的实例
+public class WriteCommand implement Command 
+{ 
+Author author; //执行者
+Book book; //要执行的对象
+public WriteCommand (Author author,Book book) {
+this. author = author;
+this. book = book;
+}
+// 在这里执行要执行的操作 
+public override void Execute() 
+{ 
+author.write (book); 
+} 
+}
+
+// 具体的命令类2: 出版命令，选择一个出版社（publisher类实例对象），让他出版书（调用它的publisherBook方法）出版的对象是书（Book的实例对象）形成了一个出版的命令
+public class PublishCommand implement Command 
+{ 
+Publisher publisher;
+Book book;
+public PublishCommand (Publisher publisher) {
+this. publisher = publisher;
+this. book = book;
+}
+// Methods 
+public override void Execute() 
+{ 
+publisher. publisherBook(book); 
+} 
+}
+
+// Publisher和Author类为执行者
+略
+
+这样我们的客户端代码就可以这样写:
+//如果我要出一本书
+//一本空白的书
+Book book = new Book();
+//先找一个作者和出版社
+Author author ＝ new Author();
+Publisher publisher ＝ new Publisher ();
+//产生命令集合
+Command writeCommand = new WriteCommand (author,book);
+Command publishCommand = new PublishCommand(publisher,book);
+List commands ＝ new List ();
+Commands.add(writeCommand);
+//找个调用者，把命令给它，让他来根据命令协调工作
+Invoker invoker = new invoker();
+Invoker.setCommands(commands);
+public void addCommand (Command command,int i){
+commands.add(i,command);
+}
+invoker.action();
+
+特点：
+1》	分布登记统一执行：
+在作程序时，经常碰到一些需求，先注册一些操作，并不马上执行，等最终确定后统一执行。如一个具体的例子:用户定制自己的报表，可以订阅饼，柱，折线，曲线图，客户选择相应的报表组合，这样对应一个命令集合，在没确定之前用户可以增删这些报表（命令），等最终确定统一交给调用者根据命令执行，生成组合报表。实现了命令分布提出，确定后统一执行的功能。
+
+2》形如流水线操作：还是出书的例子
+//先是一本空白的书：
+Book book = new Book(); 
+//找几个作者
+Author author1 ＝ new Author();
+Author author2 ＝ new Author();
+//把写1，2章的名类分别给这两个作者
+Command writeCommand = new Write1Command (author1，book);
+Command writeCommand = new Write2Command (author2，book);
+List commands ＝ new List ();
+Commands.add(writeCommand);
+//调用者
+Invoker invoker = new invoker();
+Invoker.setCommands(commands);
+//流水写书
+invoker.action()
+实际上在aciton这一方法中，invoker按照命令，让两个作者流水写作这本书。（类似一个书的流水线加工工厂）
+这样我们的书就被流水加工成功（当然这本书只有两章）
+
+这样就给了我们一种系统设计的框架，
+模型＋工具＋命令
+客户端产生命令，命令调用工具操作模型。
+Book 相当于模型
+Author 相当于和多工具类中的一个
+Command 命令
+
+3》系统需要支持命令的撤消(undo)。提供redo()方法
+我们可以和容易的加入undo和redo，这个不难理解
+
+4》在Invoker中我们可以实现跟踪，和日志。
+
+5》当系统需要为某项复制增加形的功能的时候，命令模式使新的功能（表现为一种命令）很容易地被加入到服务种里。
+命令联系了工具类即执行类和系统逻辑，
+
+简化/变化的命令模式：
+命令模式的角色比较多，在实际应用种我们可以根据所需要的功能和不需要的功能加以简化。
+
+1》去掉 调用者
+产生命令集合后，我们可以直接在client中迭代执行执行操作
+2》	变化 调用者 成为 跟踪者
+//调用者
+public class Invoker{
+List commands; //已经执行完毕的命令集合
+public void addCommand (Command command,int i){
+commands.add(i,command);
+}
+public void action(Command command){
+//执行操作
+command. execute();
+//
+commands.add(command);
+}
+}
+……………
+//还可以有丰富的redo和undo操作；(当然一些都给基于命令类提供的相应方法)
+}
+这样这个类就记录了所有执行过的操作。
+
+3》去掉 命令 用map替代
+我们完全可以用map代替命令，这样无需定义各种命令类
+我们改进例子
+Author author ＝ new Author();
+Publisher publisher ＝ new Publisher ();
+Map m = new HashMap;
+m.put(author, write);
+m.put(author, publisherBook);
+在Invoker的action方法：
+得代map
+运用java反射来调用方法；
+
+4》去掉执行者：
+直接在命令中（execute方法种）加业务逻辑。这样只适合于简单的小的系统.
+
+其他要说的内容
+1》	将某些参数传给某个方发的方式很多，除了当作方法的参数外还可以当作类的成员便俩变量传入：
+这就为命令的抽象带来了极大的方便
+abstract class Command 
+{ 
+abstract public void execute();
+}
+当我们已经有了执行者（类Test）方法execute（args1，args2 ….argsn）
+我们不必向Command加入execute（args1，args2 ….argsn）抽象方法，在说即使加了，在我们迭代的时候也无法判断或十分不容易判断哪个命令调用哪个execute方法。
+那么我们可以这样
+class ConcreteCommand : Command 
+{ 
+Test test;
+args1
+args2
+…..
+argsn
+public override void Execute() 
+{ 
+test. execute (args1，args2 ….argsn); 
+} 
+}
+2》	在想跟踪操作的时候，一般为每一个操作对象分配一个调用者，操作对象在调用者中设置。（可以抽象出一个总的调用者，来协调调用每一个具体的调用者）
+3》	命令的抽象粒度我觉得是要注意的。
+4》	理解思想，不要机械的照搬。消化成自己的，加以灵活的运用和创造在是根本出路。
+所谓命令模式的根本思想就是在 先形成命令，在根据命令执行。
