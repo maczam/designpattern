@@ -36,4 +36,4 @@ Chain Of Responsibility 责任链模式定义
 Command 模式需要事先协商客户端和服务器端的调用关系，比如 1 代表 start 2 代表 move 等，这些 都是封装在 request 中，到达服务器端再分解。
 
 ### link
-[返回目录](preface.md) 
+[返回目录](../../../../../../../../preface.md) 
