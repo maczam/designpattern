@@ -1,7 +1,7 @@
 designpattern 设计模式学习目录
 ===================================
 
-* 1. [行为模式](https://github.com/maczam/designpattern/tree/master/src/main/java/info/hexin/designpattern/behavioral)
+* 1. [行为模式](src/main/java/info/hexin/designpattern/behavioral/README.md)
  - 1.1 [责任链模式](https://github.com/maczam/designpattern/tree/master/src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
  - 1.2 [命令模式](https://github.com/maczam/designpattern/tree/master/src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
  - 1.3 [解释器模式](https://github.com/maczam/designpattern/tree/master/src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
