@@ -1,7 +1,7 @@
 designpattern 设计模式学习目录
 ===================================
 
-* 1. [行为模式](src/main/java/info/hexin/designpattern/behavioral/README.md)
+* 1 [行为模式](src/main/java/info/hexin/designpattern/behavioral/README.md)
  - 1.1 [责任链模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
  - 1.2 [命令模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
  - 1.3 [解释器模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
@@ -14,14 +14,14 @@ designpattern 设计模式学习目录
  - 1.10 [模板模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
  - 1.11 [访问者模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
 
-* 2. [创建模式]()
+* 2 [创建模式]()
  - 2.1 [单例模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
  - 2.2 [原型模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
  - 2.3 [工厂模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
  - 2.4 [抽象工厂模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
  - 2.5 [行为模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
 	
-* 3. [结构模式]()
+* 3 [结构模式]()
  - 3.1 [适配器模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
  - 3.2 [桥接模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
  - 3.3 [组合模式](src/main/java/info/hexin/designpattern/behavioral/chainofresponsibility)
