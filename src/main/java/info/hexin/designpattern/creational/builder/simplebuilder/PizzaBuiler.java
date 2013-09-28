@@ -1,5 +1,11 @@
 package info.hexin.designpattern.creational.builder.simplebuilder;
 
+/**
+ * 只有一个人知道披萨制作的整个过程，制作过程不能改变，不能构造复杂的对象。
+ * 
+ * @author hexin
+ * 
+ */
 public class PizzaBuiler {
 
 	Pizza pizza = new Pizza();
@@ -21,8 +27,8 @@ public class PizzaBuiler {
 		pizza.setTopping(topping);
 		return this;
 	}
-	
-	public Pizza builder(){
+
+	public Pizza builder() {
 		return pizza;
 	}
 }

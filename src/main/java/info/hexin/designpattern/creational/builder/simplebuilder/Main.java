@@ -1,5 +1,10 @@
 package info.hexin.designpattern.creational.builder.simplebuilder;
 
+/**
+ * 
+ * @author hexin
+ * 
+ */
 public class Main {
 	public static void main(String[] args) {
 		Pizza pizza = new PizzaBuiler().buildDough("Dough").buildSauce("Sauce")

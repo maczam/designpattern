@@ -1,7 +1,7 @@
 package info.hexin.designpattern.creational.builder.simplebuilder;
 
 /**
- * 简单的构造者模式
+ * 一个披萨
  * 
  * @author hexin
  * 

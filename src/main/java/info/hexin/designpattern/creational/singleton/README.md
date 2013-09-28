@@ -1,27 +1,24 @@
-单例模式分三种：懒汉式单例、饿汉式单例、登记式单例三种。
-单例模式有一下特点：
-1、单例类只能有一个实例。
-2、单例类必须自己自己创建自己的唯一实例。
-3、单例类必须给所有其他对象提供这一实例。
+单例模式分类
+-------------
+* 懒汉式单例
+* 饿汉式单例
+* 登记式单例
 
-
-
+单例模式特点
+---------
+* 单例类只能有一个实例
+* 单例类必须自己创建自己的唯一实例
+> 如果别人创建的话，可以多次创建
+* 单例类必须给所有其他对象提供这一实例
 
 单例创建模式是一个通用的编程习语。和多线程一起使用时，必需使用某种类型的同步。在努力创建更有效的代码时，Java 程序员们创建了双重检查锁定习语，将其和单例创建模式一起使用，从而限制同步代码量。然而，由于一些不太常见的 Java 内存模型细节的原因，并不能保证这个双重检查锁定习语有效。它偶尔会失败，而不是总失败。此外，它失败的原因并不明显，还包含 Java 内存模型的一些隐秘细节。这些事实将导致代码失败，原因是双重检查锁定难于跟踪。在本文余下的部分里，我们将详细介绍双重检查锁定习语，从而理解它在何处 失效。
-清单 1. 单例创建习语
-Java代码  
+
+单例创建习语
 import java.util.*;  
-class Singleton  
-{  
+class Singleton  {  
   private static Singleton instance;  
-  private Vector v;  
-  private boolean inUse;  
   
-  private Singleton()  
-  {  
-    v = new Vector();  
-    v.addElement(new Object());  
-    inUse = true;  
+  private Singleton()  {  
   }  
   
   public static Singleton getInstance()  
@@ -31,16 +28,18 @@ class Singleton
     return instance;               //3  
   }  
 }  
- 此类的设计确保只创建一个 Singleton 对象。构造函数被声明为 private ，getInstance() 方法只创建一个对象。这个实现适合于单线程程序。然而，当引入多线程时，就必须通过同步来保护 getInstance() 方法。如果不保护 getInstance() 方法，则可能返回 Singleton 对象的两个不同的实例。假设两个线程并发调用getInstance() 方法并且按以下顺序执行调用：
-线程 1 调用 getInstance() 方法并判断 instance 在 //1 处为 null 。 
-线程 1 进入 if 代码块，但在执行 //2 处的代码行时被线程 2 预占。 
-线程 2 调用 getInstance() 方法并在 //1 处判断 instance 为 null 。 
-线程 2 进入 if 代码块并创建一个新的 Singleton 对象并在 //2 处将变量 instance 分配给这个新对象。 
-线程 2 在 //3 处返回 Singleton 对象引用。
-线程 2 被线程 1 预占。 
-线程 1 在它停止的地方启动，并执行 //2 代码行，这导致创建另一个 Singleton 对象。 
-线程 1 在 //3 处返回这个对象。
-结果是 getInstance() 方法创建了两个 Singleton 对象，而它本该只创建一个对象。通过同步getInstance() 方法从而在同一时间只允许一个线程执行代码，这个问题得以改正，如清单 2 所示：
+
+> 此类的设计确保只创建一个 Singleton 对象。构造函数被声明为 private ，getInstance() 方法只创建一个对象。这个实现适合于单线程程序。然而，当引入多线程时，就必须通过同步来保护 getInstance() 方法。如果不保护 getInstance() 方法，则可能返回 Singleton 对象的两个不同的实例。假设两个线程并发调用getInstance() 方法并且按以下顺序执行调用：
+
+> 线程 1 调用 getInstance() 方法并判断 instance 在 //1 处为 null 。 
+> 线程 1 进入 if 代码块，但在执行 //2 处的代码行时被线程 2 预占。 
+> 线程 2 调用 getInstance() 方法并在 //1 处判断 instance 为 null 。 
+> 线程 2 进入 if 代码块并创建一个新的 Singleton 对象并在 //2 处将变量 instance 分配给这个新对象。 
+> 线程 2 在 //3 处返回 Singleton 对象引用。
+> 线程 2 被线程 1 预占。 
+> 线程 1 在它停止的地方启动，并执行 //2 代码行，这导致创建另一个 Singleton 对象。 
+> 线程 1 在 //3 处返回这个对象。
+> 结果是 getInstance() 方法创建了两个 Singleton 对象，而它本该只创建一个对象。通过同步getInstance() 方法从而在同一时间只允许一个线程执行代码，这个问题得以改正，如清单 2 所示：
 清单 2. 线程安全的 getInstance() 方法
 Java代码  
 public static synchronized Singleton getInstance()  

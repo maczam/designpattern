@@ -1,10 +1,7 @@
 package info.hexin.designpattern.creational.builder;
 
 /**
- * Director
- * <p>
- * 构造一个使用Builder接口的对象。
- * </p>
+ * Director 构造一个使用Builder接口的对象。 将制作过程组合
  * 
  * @author hexin
  * 
